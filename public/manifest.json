@@ -1,0 +1,24 @@
+{
+    "name": "MadinLocal - Artisanat Local",
+    "short_name": "MadinLocal",
+    "description": "Plateforme de vente de produits et services artisanaux",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FAF7F0",
+    "theme_color": "#8B4513",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
