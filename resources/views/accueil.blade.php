@@ -3,18 +3,44 @@
 @section('title', 'Accueil - MadinLocal')
 
 @section('content')
-{{-- ===== HERO SECTION ===== --}}
-<section class="hero-section text-white" style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%); padding: 140px 0 150px 0;">
+{{-- ===== HERO SECTION AVEC SLIDER ===== --}}
+<section class="hero-slider">
+    {{-- 📸 BACKGROUND IMAGES - ARTISANS AFRICAINS EN ACTION --}}
+<div class="slider-background">
+    {{-- 1. Couture - Tailleur africain --}}
+    <div class="slide active" style="background-image: url('{{ asset('images/artisans/couture8.jpg') }}');"></div>
+    
+    {{-- 2. Poterie - Potière africaine --}}
+    <div class="slide" style="background-image: url('{{ asset('images/artisans/poterie.jpg') }}');"></div>
+    
+    {{-- 3. Menuiserie - Menuisier africain --}}
+    <div class="slide" style="background-image: url('{{ asset('images/artisans/menusierie.jpg') }}');"></div>
+    
+    {{-- 4. Coiffure - Coiffeuse africaine --}}
+    <div class="slide" style="background-image: url('{{ asset('images/artisans/mode.jpg') }}');"></div>
+    
+    {{-- 5. Art et Décoration --}}
+    <div class="slide" style="background-image: url('{{ asset('images/artisans/vanerie.jpg') }}');"></div>
+    
+    {{-- 6. Agroalimentaire --}}
+    <div class="slide" style="background-image: url('{{ asset('images/artisans/bijoux.jpg') }}');"></div>
+</div>
+    {{-- FIN DES IMAGES DE BACKGROUND --}}
+    
+    {{-- Overlay --}}
+    <div class="slider-overlay"></div>
+    
+    {{-- Contenu --}}
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
                 <span class="badge bg-warning text-dark mb-4 px-4 py-2 rounded-pill shadow-sm">
                     <i class="bi bi-stars me-1"></i> Plateforme n°1 de l'artisanat local
                 </span>
-                <h1 class="display-3 fw-bold mb-4" style="line-height: 1.2;">
+                <h1 class="display-3 fw-bold mb-4" style="line-height: 1.2; text-shadow: 2px 2px 8px rgba(0,0,0,0.5);">
                     Découvrez l'Authenticité de <br><span class="text-warning">l'Artisanat Local</span>
                 </h1>
-                <p class="lead fs-4 mb-5 opacity-75">
+                <p class="lead fs-4 mb-5" style="opacity: 0.95; text-shadow: 1px 1px 4px rgba(0,0,0,0.4);">
                     Plus de <strong>{{ $totalArtisans }}</strong> artisans talentueux vous présentent leurs créations uniques. 
                     Soutenez l'économie locale et offrez-vous des pièces d'exception.
                 </p>
@@ -55,9 +81,19 @@
             </div>
         </div>
     </div>
+    
+    {{-- Indicators --}}
+    <div class="slider-indicators">
+        <span class="indicator active" data-slide="0"></span>
+        <span class="indicator" data-slide="1"></span>
+        <span class="indicator" data-slide="2"></span>
+        <span class="indicator" data-slide="3"></span>
+        <span class="indicator" data-slide="4"></span>
+        <span class="indicator" data-slide="5"></span>
+    </div>
 </section>
 
-{{-- ===== STATISTIQUES (Effet carte flottante) ===== --}}
+{{-- ===== STATISTIQUES ===== --}}
 <section class="bg-white" style="margin-top: -80px; padding-top: 100px; padding-bottom: 60px; position: relative; z-index: 10; border-radius: 40px 40px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.05);">
     <div class="container">
         <div class="row g-4">
@@ -284,11 +320,93 @@
     </div>
 </section>
 
-
 @endsection
 
 @push('styles')
 <style>
+    /* ===== HERO SLIDER ===== */
+    .hero-slider {
+        position: relative;
+        min-height: 100vh;
+        padding: 140px 0 150px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .slider-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+    }
+
+    .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+    }
+
+    .slide.active {
+        opacity: 1;
+        animation: zoomSlow 20s linear infinite;
+    }
+
+    @keyframes zoomSlow {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+
+    .slider-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.4) 0%, rgba(210, 105, 30, 0.3) 100%);
+        z-index: -1;
+    }
+
+    .slider-indicators {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 10;
+    }
+
+    .indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+        background: #FFC107;
+        width: 35px;
+        border-radius: 6px;
+    }
+
+    .indicator:hover {
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Autres styles */
     .stat-card { transition: transform 0.3s ease; }
     .stat-card:hover { transform: translateY(-10px); }
     .produit-card { transition: all 0.3s ease; }
@@ -298,137 +416,54 @@
     .category-card { transition: all 0.3s ease; border-left: 4px solid transparent; }
     .category-card:hover { border-left-color: #D2691E; transform: translateX(5px); }
 
-   
-
-
-
-
-
-.social-icons {
-    display: flex;
-    gap: 0.75rem;
-}
-
-.social-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(201, 169, 97, 0.15);
-    color: #C9A961;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.3s;
-}
-
-.social-icon:hover {
-    background: #C9A961;
-    color: #1e293b;
-    transform: translateY(-3px);
-}
-
-.footer-title {
-    color: #C9A961;
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    font-family: 'Fraunces', serif;
-}
-
-.footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-links li {
-    margin-bottom: 0.6rem;
-}
-
-.footer-links a {
-    color: rgba(255, 255, 255, 0.75);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-}
-
-.footer-links a:hover {
-    color: #C9A961;
-}
-
-.newsletter-form {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.newsletter-input {
-    flex: 1;
-    background: white;
-    border: none;
-    border-radius: 50px;
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
-    color: #1e293b;
-}
-
-.newsletter-input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.3);
-}
-
-.newsletter-input::placeholder {
-    color: #94a3b8;
-}
-
-.newsletter-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #C9A961;
-    border: none;
-    color: #1e293b;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.newsletter-btn:hover {
-    background: #b8983e;
-    transform: translateY(-2px);
-}
-
-.footer-divider {
-    border-color: rgba(255, 255, 255, 0.1);
-    margin: 2rem 0 1.5rem;
-}
-
-.footer-copyright {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.85rem;
-    margin: 0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .footer-madinlocal {
-        padding: 3rem 0 1.5rem;
+    @media (max-width: 768px) {
+        .hero-slider {
+            min-height: 80vh;
+            padding: 100px 0 120px 0;
+        }
     }
-    .footer-title {
-        margin-top: 1rem;
-    }
-}
 </style>
 @endpush
 
 @push('scripts')
 <script>
+    // Hero Slider
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentSlide = 0;
+        const interval = 5000;
+        
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() {
+            const next = (currentSlide + 1) % slides.length;
+            goToSlide(next);
+        }
+        
+        let timer = setInterval(nextSlide, interval);
+        
+        indicators.forEach((ind, idx) => {
+            ind.addEventListener('click', () => {
+                clearInterval(timer);
+                goToSlide(idx);
+                timer = setInterval(nextSlide, interval);
+            });
+        });
+        
+        const heroSlider = document.querySelector('.hero-slider');
+        heroSlider.addEventListener('mouseenter', () => clearInterval(timer));
+        heroSlider.addEventListener('mouseleave', () => {
+            timer = setInterval(nextSlide, interval);
+        });
+    });
+
     // Animation des compteurs
     document.addEventListener("DOMContentLoaded", () => {
         const counters = document.querySelectorAll('.counter');
@@ -449,7 +484,6 @@
             });
         };
 
-        // Observer pour déclencher l'animation au scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
